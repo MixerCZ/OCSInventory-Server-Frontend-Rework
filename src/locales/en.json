@@ -307,7 +307,12 @@
     "method": "Method",
     "path": "Path",
     "status": "Status",
-    "duration": "Duration"
+    "duration": "Duration",
+    "permissions": "Permissions",
+    "resolving": "Resolving the permissions of this page.",
+    "permissions_undetermined": "The permissions needed by this page could not be determined.",
+    "no_permission_needed": "No specific permission needed for this page.",
+    "permissions_intro": "Permissions needed to view this page and use its actions. Those of a modal are completed when it is opened or submitted."
   },
   "deployment": {
     "actions": "Actions",

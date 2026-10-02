@@ -89,6 +89,7 @@ export default {
 			return {
 				route: this.$route,
 				trace: this.store.trace,
+				checked: this.store.checked,
 				calls: this.store.calls,
 			}
 		},

@@ -6,6 +6,7 @@ export const debugStore = reactive({
 	enabled: localStorage.getItem("debug_mode") === "true",
 	collapsed: false,
 	trace: [],
+	checked: [],
 	calls: {},
 	error: null,
 })
@@ -23,14 +24,25 @@ export function isDebugActive() {
 export function setDebugMode(enabled) {
 	debugStore.enabled = enabled
 	localStorage.setItem("debug_mode", enabled)
-	if (!enabled) clearTrace()
+	if (!enabled) {
+		clearPageData()
+		debugStore.error = null
+	}
 }
 
-export function clearTrace() {
+// what was recorded for the current page: API calls and permission checks
+export function clearPageData() {
 	debugStore.trace = []
+	debugStore.checked = []
 }
 
 export function recordCall(entry) {
 	debugStore.trace.push(entry)
 	if (debugStore.trace.length > MAX_TRACE) debugStore.trace.shift()
+}
+
+export function recordPermissionCheck(codename) {
+	if (isDebugActive() && !debugStore.checked.includes(codename)) {
+		debugStore.checked.push(codename)
+	}
 }
