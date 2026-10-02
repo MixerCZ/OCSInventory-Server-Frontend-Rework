@@ -1,0 +1,64 @@
+// ===========================================
+//  DEBUG PANEL COMPONENT
+// ===========================================
+
+$debug-bar-height: 2.75rem;
+$debug-body-height: 32vh;
+
+.debug-panel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1030;
+  background-color: var(--tblr-bg-surface);
+  box-shadow: 0 -0.25rem 0.75rem rgba(0, 0, 0, 0.15);
+}
+
+.debug-panel-bar {
+  min-height: $debug-bar-height;
+  padding-top: 0;
+  padding-bottom: 0;
+
+  .nav-link {
+    background: none;
+    border: 0;
+  }
+
+  // same active marker as the main menu, see _navlink.scss
+  .nav-link.active {
+    color: $white;
+    text-decoration: solid underline #972081 .2rem;
+  }
+}
+
+.debug-panel-title {
+  margin-right: 1.5rem;
+}
+
+// scrolls both ways itself (tables are not wrapped in .table-responsive),
+// so the table headers can stick to its top
+.debug-panel-body {
+  height: $debug-body-height;
+  overflow: auto;
+  padding: 1rem;
+
+  // opaque, with Tabler's own header colour, so rows do not show through
+  thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--tblr-bg-surface-tertiary);
+  }
+}
+
+// keeps the end of the page reachable above the docked debug panel
+.app-layout {
+  &.debug-open {
+    padding-bottom: calc(#{$debug-body-height} + #{$debug-bar-height});
+  }
+
+  &.debug-collapsed {
+    padding-bottom: $debug-bar-height;
+  }
+}

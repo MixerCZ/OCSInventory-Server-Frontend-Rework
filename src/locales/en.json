@@ -296,6 +296,19 @@
     "Unique network names and their devices count": "Bar - Equipment distributed by networks",
     "Unique OS names and their count": "Pie - Assets distributed by operating systems"
   },
+  "debug": {
+    "mode": "Debug mode",
+    "title": "Debug",
+    "close": "Close debug mode",
+    "collapse": "Collapse",
+    "expand": "Expand",
+    "trace": "API trace",
+    "no_calls": "No API call recorded on this page yet.",
+    "method": "Method",
+    "path": "Path",
+    "status": "Status",
+    "duration": "Duration"
+  },
   "deployment": {
     "actions": "Actions",
     "actions_list": "Deployment actions",
@@ -544,6 +557,7 @@
     "authmapping": "Authentication - Mappings",
     "authmethod": "Authentication - Methods",
     "dashboardlayout": "Dashboard - Layout",
+    "debugmode": "Debug mode",
     "deploymentaction": "Deployment - Actions",
     "category": "Inventory - Categories",
     "complianceresult": "Compliance - Results",

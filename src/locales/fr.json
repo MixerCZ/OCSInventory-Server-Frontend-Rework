@@ -296,6 +296,19 @@
     "Unique network names and their devices count": "Bar - Équipements répartis par réseaux",
     "Unique OS names and their count": "Secteur - Actifs répartis par systèmes d'exploitation"
   },
+  "debug": {
+    "mode": "Mode debug",
+    "title": "Debug",
+    "close": "Fermer le mode debug",
+    "collapse": "Réduire",
+    "expand": "Agrandir",
+    "trace": "Trace API",
+    "no_calls": "Aucun appel API enregistré sur cette page pour le moment.",
+    "method": "Méthode",
+    "path": "Chemin",
+    "status": "Statut",
+    "duration": "Durée"
+  },
   "deployment": {
     "actions": "Actions",
     "actions_list": "Actions de déploiement",
@@ -543,6 +556,7 @@
     "authmapping": "Authentification - Mappages",
     "authmethod": "Authentification - Méthodes",
     "dashboardlayout": "Tableau de bord - Disposition",
+    "debugmode": "Mode debug",
     "deploymentaction": "Déploiement - Actions",
     "category": "Inventaire - Catégories",
     "complianceresult": "Conformité - Résultats",
