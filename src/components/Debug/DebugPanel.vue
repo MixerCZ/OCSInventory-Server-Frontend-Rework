@@ -6,6 +6,7 @@
 		<div
 			class="navbar navbar-expand debug-panel-bar"
 			data-bs-theme="dark"
+			@pointerdown="startResize"
 		>
 			<div class="container-fluid">
 				<span
@@ -54,16 +55,18 @@
 			v-show="!store.collapsed"
 			class="debug-panel-body"
 		>
-			<Alert
-				v-if="store.error"
-				variant="danger"
-				:message="store.error"
-			/>
-			<component
-				:is="currentComponent"
-				v-if="currentComponent"
-				v-bind="context"
-			/>
+			<div class="debug-panel-content">
+				<Alert
+					v-if="store.error"
+					variant="danger"
+					:message="store.error"
+				/>
+				<component
+					:is="currentComponent"
+					v-if="currentComponent"
+					v-bind="context"
+				/>
+			</div>
 		</div>
 	</div>
 </template>
@@ -71,7 +74,14 @@
 <script>
 import { defineAsyncComponent, markRaw } from "vue"
 import { getSlotEntries } from "@/extensions/slotRegistry"
-import { debugStore, isDebugActive, setDebugMode } from "@/debug/debugStore"
+import {
+	debugStore,
+	isDebugActive,
+	maxPanelHeight,
+	minPanelHeight,
+	savePanelHeight,
+	setDebugMode,
+} from "@/debug/debugStore"
 
 export default {
 	name: "DebugPanel",
@@ -110,6 +120,38 @@ export default {
 		},
 	},
 	methods: {
+		// the bar is the resize handle, its buttons keep their click. The panel
+		// follows the pointer down to 0, released below the minimum height it
+		// collapses and keeps its last height for the next opening
+		startResize(event) {
+			if (event.button !== 0 || event.target.closest("button")) return
+			event.preventDefault()
+
+			const startY = event.clientY
+			const lastHeight = this.store.height
+			// a collapsed panel has no visible body, it opens while dragged up
+			const startHeight = this.store.collapsed ? 0 : this.store.height
+			let dragged = false
+
+			const resize = (move) => {
+				dragged = true
+				const height = startHeight + startY - move.clientY
+				this.store.collapsed = false
+				this.store.height = Math.round(Math.min(Math.max(height, 0), maxPanelHeight()))
+			}
+			const stop = () => {
+				window.removeEventListener("pointermove", resize)
+				window.removeEventListener("pointerup", stop)
+				if (!dragged) return
+				if (this.store.height < minPanelHeight()) {
+					this.store.collapsed = true
+					this.store.height = lastHeight
+				}
+				savePanelHeight()
+			}
+			window.addEventListener("pointermove", resize)
+			window.addEventListener("pointerup", stop)
+		},
 		select(idx) {
 			this.activeSection = idx
 			this.store.collapsed = false

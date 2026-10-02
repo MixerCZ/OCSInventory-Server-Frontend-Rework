@@ -2,6 +2,7 @@
 	<div
 		class="app-layout"
 		:class="{ 'debug-open': debugActive && !debug.collapsed, 'debug-collapsed': debugActive && debug.collapsed }"
+		:style="debugActive ? { '--debug-panel-height': debug.height + 'px' } : null"
 	>
 		<Header />
 		<router-view />

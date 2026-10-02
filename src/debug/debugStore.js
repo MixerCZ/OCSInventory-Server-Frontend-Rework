@@ -1,10 +1,12 @@
 import { reactive } from "vue"
 
 const MAX_TRACE = 200
+const PANEL_HEIGHT_KEY = "debug_panel_height"
 
 export const debugStore = reactive({
 	enabled: localStorage.getItem("debug_mode") === "true",
 	collapsed: false,
+	height: initialPanelHeight(),
 	trace: [],
 	checked: [],
 	calls: {},
@@ -45,4 +47,26 @@ export function recordPermissionCheck(codename) {
 	if (isDebugActive() && !debugStore.checked.includes(codename)) {
 		debugStore.checked.push(codename)
 	}
+}
+
+// panel body height in px, between 15% and 80% of the window
+export function minPanelHeight() {
+	return window.innerHeight * 0.15
+}
+
+export function maxPanelHeight() {
+	return window.innerHeight * 0.8
+}
+
+export function clampPanelHeight(height) {
+	return Math.round(Math.min(Math.max(height, minPanelHeight()), maxPanelHeight()))
+}
+
+function initialPanelHeight() {
+	const saved = parseInt(localStorage.getItem(PANEL_HEIGHT_KEY), 10)
+	return clampPanelHeight(Number.isNaN(saved) ? window.innerHeight * 0.32 : saved)
+}
+
+export function savePanelHeight() {
+	localStorage.setItem(PANEL_HEIGHT_KEY, debugStore.height)
 }

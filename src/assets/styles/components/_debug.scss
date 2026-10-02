@@ -3,7 +3,8 @@
 // ===========================================
 
 $debug-bar-height: 2.75rem;
-$debug-body-height: 32vh;
+// set by AppLayout from the height chosen by dragging the panel bar
+$debug-body-height: var(--debug-panel-height, 32vh);
 
 .debug-panel {
   position: fixed;
@@ -19,10 +20,14 @@ $debug-body-height: 32vh;
   min-height: $debug-bar-height;
   padding-top: 0;
   padding-bottom: 0;
+  cursor: ns-resize;
+  touch-action: none;
+  user-select: none;
 
   .nav-link {
     background: none;
     border: 0;
+    cursor: pointer;
   }
 
   // same active marker as the main menu, see _navlink.scss
@@ -41,7 +46,6 @@ $debug-body-height: 32vh;
 .debug-panel-body {
   height: $debug-body-height;
   overflow: auto;
-  padding: 1rem;
 
   // opaque, with Tabler's own header colour, so rows do not show through
   thead th {
@@ -50,6 +54,11 @@ $debug-body-height: 32vh;
     z-index: 1;
     background: var(--tblr-bg-surface-tertiary);
   }
+}
+
+// padding inside the scrolled body, so the body can shrink to 0 while dragged
+.debug-panel-content {
+  padding: 1rem;
 }
 
 // keeps the end of the page reachable above the docked debug panel
